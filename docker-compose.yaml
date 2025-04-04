@@ -1,0 +1,15 @@
+services:
+  quizzem-pg:
+    image: postgres:latest
+    container_name: quizzem-pg
+    environment:
+      POSTGRES_USER: quizzem
+      POSTGRES_PASSWORD: quizzem
+      POSTGRES_DB: quizzem
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

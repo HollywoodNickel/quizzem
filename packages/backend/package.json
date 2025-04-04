@@ -1,5 +1,23 @@
 {
   "name": "@quizzem/backend",
   "version": "0.1.0",
-  "author": "HollywoodNickel"
+  "author": "HollywoodNickel",
+  "scripts": {
+    "dev": "NODE_ENV=development tsx watch src/index.ts | pino-pretty",
+    "build": "tsx build src/index.ts",
+    "start": "NODE_ENV=production node dist/index.js"
+  },
+  "dependencies": {
+    "@types/node": "^22.14.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "tsx": "^4.19.3"
+  }
 }

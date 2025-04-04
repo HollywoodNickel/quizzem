@@ -12,6 +12,10 @@ importers:
         specifier: ^5.8.2
         version: 5.8.2
 
+  packages/backend: {}
+
+  packages/frontend: {}
+
 packages:
 
   typescript@5.8.2:

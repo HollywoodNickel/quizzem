@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "author": "HollywoodNickel",
   "scripts": {
-    "dev": "NODE_ENV=development tsx watch src/index.ts | pino-pretty",
-    "build": "tsx build src/index.ts",
-    "start": "NODE_ENV=production node dist/index.js"
+    "dev": "NODE_ENV=development tsx watch src/main.ts | pino-pretty",
+    "build": "tsx build src/main.ts",
+    "start": "NODE_ENV=production node dist/main.js"
   },
   "dependencies": {
     "@types/node": "^22.14.0",

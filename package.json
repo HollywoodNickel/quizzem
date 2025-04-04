@@ -1,0 +1,11 @@
+{
+  "name": "quizzem",
+  "version": "0.1.0",
+  "author": "HollywoodNickel",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
+}

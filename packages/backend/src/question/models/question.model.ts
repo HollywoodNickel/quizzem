@@ -1,7 +1,7 @@
 import { AnswerModel } from 'src/question/models/answers.model';
 import { EQuestionType } from 'src/question/models/question-type.enum';
 import { QuizzemModel } from 'src/utils/quizzem.model';
-import { Column, Entity, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 
 @Entity('question')
 export class QuestionModel extends QuizzemModel {
@@ -19,6 +19,7 @@ export class QuestionModel extends QuizzemModel {
 
   // ----------- Relations ----------------
 
-  @OneToOne(() => AnswerModel, (answer) => answer.question)
+  @OneToOne(() => AnswerModel, (answer) => answer.id)
+  @JoinColumn()
   answer: AnswerModel;
 }

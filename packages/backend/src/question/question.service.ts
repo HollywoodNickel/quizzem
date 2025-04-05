@@ -15,6 +15,12 @@ export class QuestionService {
     private readonly answerRepo: Repository<AnswerModel>,
   ) {}
 
+  async getQuestions(): Promise<QuestionModel[]> {
+    return await this.questionRepo.find({
+      relations: ['answer'],
+    });
+  }
+
   async addQuestion(body: CreateQuestionDto): Promise<void> {
     const isValid = this.checkCorrectAnswerStructure(body);
     if (!isValid) {

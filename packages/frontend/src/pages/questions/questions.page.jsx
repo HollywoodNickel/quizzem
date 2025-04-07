@@ -1,7 +1,6 @@
-import { JSX } from "react";
 import CreateQuestion from "./components/create-question";
 
-export function QuestionsPage(): JSX.Element {
+export function QuestionsPage() {
   return (
     <>
       <h3>Create a Question</h3>

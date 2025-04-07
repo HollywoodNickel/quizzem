@@ -1,9 +1,7 @@
-import { JSX } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { AnswerOrderingDto } from "../utils/questions.types";
 
-export function AnswerOrdering(): JSX.Element {
-  const { register, control } = useFormContext<AnswerOrderingDto>();
+export function AnswerOrdering() {
+  const { register, control } = useFormContext();
 
   const fieldName = "answer.correctOrder";
 

@@ -1,29 +1,25 @@
-import { JSX } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { usePostRemote } from "../../../utils/remote/hooks/usePostRemote";
 import { createQuestionMapper } from "../utils/create-question-mapper";
-import { CreateQuestionDto, EQuestionType } from "../utils/questions.types";
+import {
+  createQuestionDefaultValues,
+  EQuestionType,
+} from "../utils/create-question-values";
 import { RenderAnswersPerTypeOfQuestions } from "../utils/render-answers-per-type-of-questions";
 import { resetAnswerField } from "../utils/reset-answer-field";
 
-export default function CreateQuestion(): JSX.Element {
-  const { mutate } = usePostRemote<CreateQuestionDto, void>("question");
+export default function CreateQuestion() {
+  const { mutate } = usePostRemote("question");
 
-  const form = useForm<CreateQuestionDto>({
-    defaultValues: {
-      question: "",
-      type: EQuestionType.MULTIPLE_CHOICE,
-      answer: { choices: [{ text: "", correctAnswer: false }] },
-      hint: null,
-      timer: null,
-    },
+  const form = useForm({
+    defaultValues: createQuestionDefaultValues,
   });
 
   const { register, handleSubmit, watch, setValue } = form;
 
   const typeOfQuestion = watch("type");
 
-  const onSubmit: SubmitHandler<CreateQuestionDto> = (data) => {
+  const onSubmit = (data) => {
     const createQuestionDto = createQuestionMapper(data);
   };
 
@@ -50,7 +46,7 @@ export default function CreateQuestion(): JSX.Element {
         <select
           {...register("type", {
             onChange: (e) => {
-              const selectedType = e.target.value as EQuestionType;
+              const selectedType = e.target.value;
               setValue("type", selectedType);
               resetAnswerField(selectedType, setValue);
             },

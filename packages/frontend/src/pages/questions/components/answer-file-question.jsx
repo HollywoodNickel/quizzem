@@ -1,9 +1,7 @@
-import { JSX } from "react";
 import { useFormContext } from "react-hook-form";
-import { AnswerFileDto } from "../utils/questions.types";
 
-export function AnswerFileQuestion(): JSX.Element {
-  const { register } = useFormContext<AnswerFileDto>();
+export function AnswerFileQuestion() {
+  const { register } = useFormContext();
 
   return (
     <>

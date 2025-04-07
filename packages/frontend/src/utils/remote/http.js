@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 export const http = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -9,7 +9,7 @@ http.interceptors.request.use(
   (req) => {
     return req;
   },
-  (err: AxiosError) => {
+  (err) => {
     throw err;
   }
 );
@@ -18,7 +18,7 @@ http.interceptors.response.use(
   (res) => {
     return res;
   },
-  (err: AxiosError) => {
+  (err) => {
     throw err;
   }
 );

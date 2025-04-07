@@ -1,10 +1,6 @@
-import { UseFormSetValue } from "react-hook-form";
-import { CreateQuestionDto, EQuestionType } from "./questions.types";
+import { EQuestionType } from "./create-question-values";
 
-export function resetAnswerField(
-  selectedType: EQuestionType,
-  setValue: UseFormSetValue<CreateQuestionDto>
-) {
+export function resetAnswerField(selectedType, setValue) {
   switch (selectedType) {
     case EQuestionType.TRUE_FALSE:
       setValue("answer", {
@@ -15,7 +11,7 @@ export function resetAnswerField(
     case EQuestionType.ORDERING:
       setValue("answer", {
         correctOrder: [{ value: "" }],
-      } as any);
+      });
       break;
     case EQuestionType.ESTIMATE:
     case EQuestionType.NUMERIC:
@@ -31,7 +27,6 @@ export function resetAnswerField(
         correctAnswer: "",
       });
       break;
-    case EQuestionType.MULTIPLE_CHOICE:
     default:
       setValue("answer", {
         choices: [{ text: "", correctAnswer: false }],

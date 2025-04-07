@@ -8,7 +8,7 @@ import {
 import { RenderAnswersPerTypeOfQuestions } from "../utils/render-answers-per-type-of-questions";
 import { resetAnswerField } from "../utils/reset-answer-field";
 
-export default function CreateQuestion() {
+export function CreateQuestion() {
   const { mutate } = usePostRemote("question");
 
   const form = useForm({
@@ -21,6 +21,11 @@ export default function CreateQuestion() {
 
   const onSubmit = (data) => {
     const createQuestionDto = createQuestionMapper(data);
+    mutate(createQuestionDto, {
+      onSuccess: () => {
+        form.reset();
+      },
+    });
   };
 
   return (

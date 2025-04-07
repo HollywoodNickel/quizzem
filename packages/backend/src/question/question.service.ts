@@ -16,9 +16,7 @@ export class QuestionService {
   ) {}
 
   async getQuestions(): Promise<QuestionModel[]> {
-    return await this.questionRepo.find({
-      relations: ['answer'],
-    });
+    return await this.questionRepo.find({ relations: ['answer'] });
   }
 
   async addQuestion(body: CreateQuestionDto): Promise<void> {
@@ -27,17 +25,19 @@ export class QuestionService {
       throw new BadRequestException('Invalid answer structure');
     }
 
-    const question = await this.questionRepo.save({
+    const answer = this.answerRepo.create({
+      answer: body.answer,
+    });
+    await this.answerRepo.save(answer);
+
+    const question = this.questionRepo.create({
       question: body.question,
       hint: body.hint,
       type: body.type,
       timer: body.timer,
+      answer,
     });
-
-    await this.answerRepo.save({
-      answer: body.answer,
-      question,
-    });
+    await this.questionRepo.save(question);
   }
 
   checkCorrectAnswerStructure(body: CreateQuestionDto): boolean {

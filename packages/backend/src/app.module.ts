@@ -22,7 +22,6 @@ import { QuestionModule } from './question/question.module';
         database: configService.get('DB_DATABASE'),
         autoLoadEntities: true,
         synchronize: true,
-        logging: 'all',
       }),
     }),
     QuestionModule,

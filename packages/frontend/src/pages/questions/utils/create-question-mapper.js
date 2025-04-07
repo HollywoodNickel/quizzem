@@ -18,6 +18,5 @@ export function createQuestionMapper(data) {
       break;
   }
 
-  console.log("createQuestionMapper", dataToSend);
   return dataToSend;
 }

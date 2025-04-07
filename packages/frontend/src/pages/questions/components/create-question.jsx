@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { usePostRemote } from "../../../utils/remote/hooks/usePostRemote";
+import { Button, Input, LabelInput } from "~/components";
+import { usePostRemote } from "~/utils";
 import { createQuestionMapper } from "../utils/create-question-mapper";
 import {
   createQuestionDefaultValues,
@@ -31,23 +32,19 @@ export function CreateQuestion() {
   return (
     <FormProvider {...form}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>
-          <span>Question</span>
-          <input {...register("question")} />
-        </label>
-        <label>
-          <span>Possible hint</span>
-          <input {...register("hint")} />
-        </label>
-        <label>
-          <span>Timer</span>
-          <input
+        <LabelInput label={"Question"}>
+          <Input {...register("question")} />
+        </LabelInput>
+        <LabelInput label={"Possible hint"}>
+          <Input {...register("hint")} />
+        </LabelInput>
+        <LabelInput label={"Timer"}>
+          <Input
             type={"number"}
             {...register("timer", { valueAsNumber: true })}
           />
-        </label>
+        </LabelInput>
 
-        <h4>Answer</h4>
         <select
           {...register("type", {
             onChange: (e) => {
@@ -64,9 +61,9 @@ export function CreateQuestion() {
 
         <RenderAnswersPerTypeOfQuestions typeOfQuestion={typeOfQuestion} />
 
-        <button className="btn btn-primary" type="submit">
+        <Button className={"w-full mt-8"} type="submit">
           Submit
-        </button>
+        </Button>
       </form>
     </FormProvider>
   );

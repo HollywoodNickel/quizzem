@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import { Headline, Input, LabelInput } from "~/components";
 
 export function AnswerNumeric(props) {
   const { label } = props;
@@ -6,12 +7,15 @@ export function AnswerNumeric(props) {
   const { register } = useFormContext();
 
   return (
-    <label>
-      <span>{label}</span>
-      <input
-        type="number"
-        {...register("answer.correctAnswer", { valueAsNumber: true })}
-      />
-    </label>
+    <>
+      <Headline as={"h4"}>Antwort</Headline>
+
+      <LabelInput label={label}>
+        <Input
+          type="number"
+          {...register("answer.correctAnswer", { valueAsNumber: true })}
+        />
+      </LabelInput>
+    </>
   );
 }

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'path';
-import { IEnvVariables } from 'src/utils/env.types';
+import { DbModule } from 'src/db/db.module';
+import { CategoryModule } from './category/category.module';
 import { QuestionModule } from './question/question.module';
 
 @Module({
@@ -11,20 +11,9 @@ import { QuestionModule } from './question/question.module';
       isGlobal: true,
       envFilePath: resolve(process.cwd(), '../..', '.env.development'),
     }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService<IEnvVariables>) => ({
-        type: 'postgres',
-        host: configService.get('DB_HOST'),
-        port: configService.get('DB_PORT'),
-        username: configService.get('DB_USER'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_DATABASE'),
-        autoLoadEntities: true,
-        synchronize: true,
-      }),
-    }),
+    DbModule,
     QuestionModule,
+    CategoryModule,
   ],
 })
 export class AppModule {}

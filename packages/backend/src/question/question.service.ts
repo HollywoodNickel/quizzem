@@ -16,7 +16,7 @@ export class QuestionService {
   ) {}
 
   async getQuestions(): Promise<QuestionModel[]> {
-    return await this.questionRepo.find({ relations: ['answer'] });
+    return await this.questionRepo.find({ relations: ['answer', 'category'] });
   }
 
   async addQuestion(body: CreateQuestionDto): Promise<void> {

@@ -1,13 +1,14 @@
+import { Headline } from "~/components";
 import { CreateQuestion } from "./components/create-question";
 import { ListQuestions } from "./components/list-questions";
 
 export function QuestionsPage() {
   return (
     <main className="p-4">
-      <h3>List of Questions</h3>
+      <Headline as={"h3"}>List of Questions</Headline>
       <ListQuestions />
 
-      <h3>Create a Question</h3>
+      <Headline as={"h3"}>Create a Question</Headline>
       <CreateQuestion />
     </main>
   );

@@ -7,4 +7,9 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   envDir: resolve(process.cwd(), "../.."),
+  resolve: {
+    alias: {
+      "~": resolve(process.cwd(), "./src"),
+    },
+  },
 });

@@ -7,4 +7,5 @@ export class QuestionDto extends QuizzemDto {
   type: EQuestionType;
   timer: number | null;
   answer: Record<string, unknown>;
+  category: string;
 }

@@ -11,6 +11,7 @@ export class QuestionMapper {
       type: question.type,
       timer: question.timer,
       answer: question.answer.answer,
+      category: question.category.category,
     };
   }
 

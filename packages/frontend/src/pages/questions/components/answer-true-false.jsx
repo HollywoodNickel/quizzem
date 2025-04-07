@@ -1,12 +1,16 @@
 import { useFormContext } from "react-hook-form";
+import { Checkbox, Headline, LabelInput } from "~/components";
 
 export function AnswerTrueFalse() {
   const { register } = useFormContext();
 
   return (
-    <label>
-      <span>True or False</span>
-      <input type="checkbox" {...register("answer.correctAnswer")} />
-    </label>
+    <>
+      <Headline as={"h4"}>Antwort</Headline>
+
+      <LabelInput label={"Ist die Behauptung korrekt?"}>
+        <Checkbox {...register("answer.correctAnswer")} />
+      </LabelInput>
+    </>
   );
 }

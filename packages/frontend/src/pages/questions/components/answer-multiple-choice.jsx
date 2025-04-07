@@ -1,4 +1,5 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { Button, Checkbox, Headline, Input, LabelInput } from "~/components";
 
 export function AnswerMultipleChoice() {
   const { register, control } = useFormContext();
@@ -12,27 +13,28 @@ export function AnswerMultipleChoice() {
 
   return (
     <>
-      {fields.map((field, i) => (
-        <div key={field.id}>
-          <label>
-            <span>text</span>
-            <input {...register(`${fieldName}.${i}.text`)} />
-          </label>
-          <label>
-            <span>correct answer</span>
-            <input
-              type="checkbox"
-              {...register(`${fieldName}.${i}.correctAnswer`)}
-            />
-          </label>
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={() => append({ text: "", correctAnswer: false })}
-      >
-        Append
-      </button>
+      <Headline as={"h4"}>Antworten</Headline>
+
+      <div className="flex flex-col gap-4">
+        {fields.map((field, i) => (
+          <div key={field.id}>
+            {i > 0 && <div className="divider" />}
+            <LabelInput label={"Text"}>
+              <Input {...register(`${fieldName}.${i}.text`)} />
+            </LabelInput>
+            <LabelInput label={"Ist es die richtige Antwort?"}>
+              <Checkbox {...register(`${fieldName}.${i}.correctAnswer`)} />
+            </LabelInput>
+          </div>
+        ))}
+        <Button
+          variant="outline"
+          type="button"
+          onClick={() => append({ text: "", correctAnswer: false })}
+        >
+          Append
+        </Button>
+      </div>
     </>
   );
 }

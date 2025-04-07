@@ -1,12 +1,8 @@
 import { JSX } from "react";
 import { useFormContext } from "react-hook-form";
-import { CreateQuestionDto, EQuestionType } from "../utils/questions.types";
+import { AnswerNumericDto } from "../utils/questions.types";
 
 type AnswerNumericProps = { label: string };
-type AnswerNumericDto = Extract<
-  CreateQuestionDto,
-  { type: EQuestionType.ESTIMATE | EQuestionType.NUMERIC }
->;
 
 export function AnswerNumeric(
   props: Readonly<AnswerNumericProps>

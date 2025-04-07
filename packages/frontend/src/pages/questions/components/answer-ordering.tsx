@@ -1,13 +1,9 @@
 import { JSX } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { CreateQuestionDto, EQuestionType } from "../utils/questions.types";
+import { AnswerOrderingDto } from "../utils/questions.types";
 
-type FillInTheBlank = Extract<
-  CreateQuestionDto,
-  { type: EQuestionType.FILL_IN_THE_BLANK | EQuestionType.ORDERING }
->;
 export function AnswerOrdering(): JSX.Element {
-  const { register, control } = useFormContext<FillInTheBlank>();
+  const { register, control } = useFormContext<AnswerOrderingDto>();
 
   const fieldName = "answer.correctOrder";
 
@@ -17,7 +13,7 @@ export function AnswerOrdering(): JSX.Element {
     <>
       {fields.map((field, i) => (
         <div key={field.id}>
-          <input {...register(`${fieldName}.${i}`)} />
+          <input {...register(`${fieldName}.${i}.value`)} />
         </div>
       ))}
       <button type="button" onClick={() => append({ value: "" })}>

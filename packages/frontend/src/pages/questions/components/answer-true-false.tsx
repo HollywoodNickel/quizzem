@@ -1,11 +1,6 @@
 import { JSX } from "react";
 import { useFormContext } from "react-hook-form";
-import { CreateQuestionDto, EQuestionType } from "../utils/questions.types";
-
-type AnswerTrueFalseDto = Extract<
-  CreateQuestionDto,
-  { type: EQuestionType.TRUE_FALSE }
->;
+import { AnswerTrueFalseDto } from "../utils/questions.types";
 
 export function AnswerTrueFalse(): JSX.Element {
   const { register } = useFormContext<AnswerTrueFalseDto>();

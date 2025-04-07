@@ -1,11 +1,6 @@
 import { JSX } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { CreateQuestionDto, EQuestionType } from "../utils/questions.types";
-
-type AnswerMultipleChoiceDto = Extract<
-  CreateQuestionDto,
-  { type: EQuestionType.MULTIPLE_CHOICE }
->;
+import { AnswerMultipleChoiceDto } from "../utils/questions.types";
 
 export function AnswerMultipleChoice(): JSX.Element {
   const { register, control } = useFormContext<AnswerMultipleChoiceDto>();

@@ -1,14 +1,3 @@
-import { Control, FieldValues, UseFormRegister } from "react-hook-form";
-
-export type AnswerTypeOfQuestionProps = {
-  register: UseFormRegister<CreateQuestionDto>;
-};
-
-export type AnswerTypeOfQuestionWithControlProps<T extends FieldValues> =
-  AnswerTypeOfQuestionProps & {
-    control: Control<T>;
-  };
-
 export enum EQuestionType {
   MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
   TRUE_FALSE = "TRUE_FALSE",
@@ -27,48 +16,72 @@ export type CommonCreateQuestionDto = {
   timer: number | null;
 };
 
-export type CreateQuestionDto =
-  | (CommonCreateQuestionDto & {
-      type: EQuestionType.MULTIPLE_CHOICE;
-      answer: AnswerMultipleChoice;
-    })
-  | (CommonCreateQuestionDto & {
-      type: EQuestionType.TRUE_FALSE;
-      answer: AnswerTrueFalse;
-    })
-  | (CommonCreateQuestionDto & {
-      type: EQuestionType.FILL_IN_THE_BLANK | EQuestionType.ORDERING;
-      answer: AnswerOrdering;
-    })
-  | (CommonCreateQuestionDto & {
-      type: EQuestionType.ESTIMATE | EQuestionType.NUMERIC;
-      answer: AnswerNumeric;
-    })
-  | (CommonCreateQuestionDto & {
-      type:
-        | EQuestionType.IMAGE_QUESTION
-        | EQuestionType.VIDEO_QUESTION
-        | EQuestionType.MUSIC_QUESTION;
-      answer: AnswerFile;
-    });
+type CompositeQuestionDto<T> = CommonCreateQuestionDto & T;
 
-export type AnswerMultipleChoice = {
+export type AnswerMultipleChoiceDto = CompositeQuestionDto<{
+  type: EQuestionType.MULTIPLE_CHOICE;
+  answer: AnswerMultipleChoice;
+}>;
+
+export type AnswerTrueFalseDto = CompositeQuestionDto<{
+  type: EQuestionType.TRUE_FALSE;
+  answer: AnswerTrueFalse;
+}>;
+
+export type AnswerOrderingDto = CompositeQuestionDto<{
+  type: EQuestionType.FILL_IN_THE_BLANK | EQuestionType.ORDERING;
+  answer: AnswerOrdering;
+}>;
+
+export type AnswerNumericDto = CompositeQuestionDto<{
+  type: EQuestionType.ESTIMATE | EQuestionType.NUMERIC;
+  answer: AnswerNumeric;
+}>;
+
+export type AnswerFileDto = CompositeQuestionDto<{
+  type:
+    | EQuestionType.IMAGE_QUESTION
+    | EQuestionType.VIDEO_QUESTION
+    | EQuestionType.MUSIC_QUESTION;
+  answer: AnswerFile;
+}>;
+
+export type CreateQuestionDto = CommonCreateQuestionDto & {
+  type:
+    | EQuestionType.MULTIPLE_CHOICE
+    | EQuestionType.TRUE_FALSE
+    | EQuestionType.FILL_IN_THE_BLANK
+    | EQuestionType.ORDERING
+    | EQuestionType.ESTIMATE
+    | EQuestionType.NUMERIC
+    | EQuestionType.IMAGE_QUESTION
+    | EQuestionType.MUSIC_QUESTION
+    | EQuestionType.VIDEO_QUESTION;
+  answer:
+    | AnswerMultipleChoice
+    | AnswerTrueFalse
+    | AnswerOrdering
+    | AnswerNumeric
+    | AnswerFile;
+};
+
+type AnswerMultipleChoice = {
   choices: { text: string; correctAnswer: boolean }[];
 };
 
-export type AnswerTrueFalse = {
+type AnswerTrueFalse = {
   correctAnswer: boolean;
 };
 
-export type AnswerOrdering = {
+type AnswerOrdering = {
   correctOrder: { value: string }[];
 };
 
-export type AnswerNumeric = {
+type AnswerNumeric = {
   correctAnswer: number;
 };
 
-export type AnswerFile = {
+type AnswerFile = {
   file: string;
   correctAnswer: string;
 };

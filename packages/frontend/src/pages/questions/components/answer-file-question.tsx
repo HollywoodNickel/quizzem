@@ -1,19 +1,9 @@
 import { JSX } from "react";
 import { useFormContext } from "react-hook-form";
-import { CreateQuestionDto, EQuestionType } from "../utils/questions.types";
-
-type FileQuestionDto = Extract<
-  CreateQuestionDto,
-  {
-    type:
-      | EQuestionType.IMAGE_QUESTION
-      | EQuestionType.VIDEO_QUESTION
-      | EQuestionType.MUSIC_QUESTION;
-  }
->;
+import { AnswerFileDto } from "../utils/questions.types";
 
 export function AnswerFileQuestion(): JSX.Element {
-  const { register } = useFormContext<FileQuestionDto>();
+  const { register } = useFormContext<AnswerFileDto>();
 
   return (
     <>

@@ -1,6 +1,5 @@
 import { JSX } from "react";
 import { AnswerFileQuestion } from "../components/answer-file-question";
-import { AnswerFillInTheBlank } from "../components/answer-fill-in-the-blank";
 import { AnswerMultipleChoice } from "../components/answer-multiple-choice";
 import { AnswerNumeric } from "../components/answer-numeric";
 import { AnswerOrdering } from "../components/answer-ordering";
@@ -19,7 +18,7 @@ export function RenderAnswersPerTypeOfQuestions(
   const answerPerTypeOfQuestionMap: Record<EQuestionType, JSX.Element> = {
     [EQuestionType.MULTIPLE_CHOICE]: <AnswerMultipleChoice />,
     [EQuestionType.TRUE_FALSE]: <AnswerTrueFalse />,
-    [EQuestionType.FILL_IN_THE_BLANK]: <AnswerFillInTheBlank />,
+    [EQuestionType.FILL_IN_THE_BLANK]: <AnswerOrdering />,
     [EQuestionType.ORDERING]: <AnswerOrdering />,
     [EQuestionType.ESTIMATE]: <AnswerNumeric label="Estimate" />,
     [EQuestionType.NUMERIC]: <AnswerNumeric label="Numeric" />,

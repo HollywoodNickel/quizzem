@@ -1,6 +1,7 @@
 import { JSX } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { usePostRemote } from "../../../utils/remote/hooks/usePostRemote";
+import { createQuestionMapper } from "../utils/create-question-mapper";
 import { CreateQuestionDto, EQuestionType } from "../utils/questions.types";
 import { RenderAnswersPerTypeOfQuestions } from "../utils/render-answers-per-type-of-questions";
 import { resetAnswerField } from "../utils/reset-answer-field";
@@ -23,7 +24,7 @@ export default function CreateQuestion(): JSX.Element {
   const typeOfQuestion = watch("type");
 
   const onSubmit: SubmitHandler<CreateQuestionDto> = (data) => {
-    console.log("data", data);
+    const createQuestionDto = createQuestionMapper(data);
   };
 
   return (
@@ -39,7 +40,10 @@ export default function CreateQuestion(): JSX.Element {
         </label>
         <label>
           <span>Timer</span>
-          <input type={"number"} {...register("timer")} />
+          <input
+            type={"number"}
+            {...register("timer", { valueAsNumber: true })}
+          />
         </label>
 
         <h4>Answer</h4>

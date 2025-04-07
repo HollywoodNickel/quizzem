@@ -15,7 +15,7 @@ export function resetAnswerField(
     case EQuestionType.ORDERING:
       setValue("answer", {
         correctOrder: [{ value: "" }],
-      });
+      } as any);
       break;
     case EQuestionType.ESTIMATE:
     case EQuestionType.NUMERIC:

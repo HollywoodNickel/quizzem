@@ -30,7 +30,7 @@ export type AnswerTrueFalseDto = CompositeQuestionDto<{
 
 export type AnswerOrderingDto = CompositeQuestionDto<{
   type: EQuestionType.FILL_IN_THE_BLANK | EQuestionType.ORDERING;
-  answer: AnswerOrdering;
+  answer: { correctOrder: { value: string }[] };
 }>;
 
 export type AnswerNumericDto = CompositeQuestionDto<{
@@ -74,7 +74,7 @@ type AnswerTrueFalse = {
 };
 
 type AnswerOrdering = {
-  correctOrder: { value: string }[];
+  correctOrder: string[];
 };
 
 type AnswerNumeric = {

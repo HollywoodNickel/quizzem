@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { Button, Input, LabelInput } from "~/components";
+import { Button, Input, LabelInput, Select } from "~/components";
 import { usePostRemote } from "~/utils";
 import { createQuestionMapper } from "../utils/create-question-mapper";
 import {
@@ -45,19 +45,23 @@ export function CreateQuestion() {
           />
         </LabelInput>
 
-        <select
-          {...register("type", {
-            onChange: (e) => {
-              const selectedType = e.target.value;
-              setValue("type", selectedType);
-              resetAnswerField(selectedType, setValue);
-            },
-          })}
-        >
-          {Object.values(EQuestionType).map((type) => (
-            <option key={type}>{type}</option>
-          ))}
-        </select>
+        <LabelInput label={"Art der Frage"}>
+          <Select
+            {...register("type", {
+              onChange: (e) => {
+                const selectedType = e.target.value;
+                setValue("type", selectedType);
+                resetAnswerField(selectedType, setValue);
+              },
+            })}
+          >
+            {Object.values(EQuestionType).map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </Select>
+        </LabelInput>
 
         <RenderAnswersPerTypeOfQuestions typeOfQuestion={typeOfQuestion} />
 

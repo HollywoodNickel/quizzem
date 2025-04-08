@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateCategoryDto } from 'src/category/dts/create-category.dto';
+import { CreateCategoryDto } from 'src/category/dto/create-category.dto';
 import { CategoryModel } from 'src/question/models/category.model';
+import { PageableQueryDto } from 'src/utils/pageable/dto/pageable-query.dto';
+import { PageableDto } from 'src/utils/pageable/dto/pageable.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -11,8 +13,23 @@ export class CategoryService {
     private readonly categoryRepo: Repository<CategoryModel>,
   ) {}
 
-  async getCategories() {
-    return await this.categoryRepo.find({ take: 5 });
+  async getCategories(
+    query: PageableQueryDto,
+  ): Promise<PageableDto<CategoryModel>> {
+    const { page, size } = query;
+
+    const count = await this.categoryRepo.count();
+    const categories = await this.categoryRepo.find({
+      skip: size,
+      take: page * size,
+    });
+
+    return new PageableDto({
+      data: categories,
+      totalElements: count,
+      page,
+      size,
+    });
   }
 
   async addCategory(data: CreateCategoryDto) {

@@ -29,7 +29,7 @@ export function AnswerMultipleChoice(): JSX.Element {
           </div>
         ))}
         <Button
-          variant="outline"
+          variant="neutral"
           type="button"
           onClick={() => append({ text: "", correctAnswer: false })}
         >

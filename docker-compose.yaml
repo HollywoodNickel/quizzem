@@ -10,6 +10,15 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+  quizzem-redis:
+    image: redis:alpine
+    container_name: quizzem-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-dev-data:/data
+    command: [ "redis-server", "--appendonly", "yes" ]
 
 volumes:
   pgdata:
+  redis-dev-data:

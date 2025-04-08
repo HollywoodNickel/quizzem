@@ -1,4 +1,4 @@
-import { IconX } from "@tabler/icons-react";
+import { RiCloseLine } from "@remixicon/react";
 import { JSX, useState } from "react";
 import { Button, Headline, IconButton, Slider } from "~/components";
 import { CreateQuestion } from "~/pages/questions/components/create/create-question";
@@ -18,7 +18,7 @@ export function QuestionsPage(): JSX.Element {
         <div className="flex justify-between items-center">
           <Headline as={"h3"}>Create a Question</Headline>
           <IconButton onClick={() => setOpenCreate(false)}>
-            <IconX />
+            <RiCloseLine />
           </IconButton>
         </div>
         <CreateQuestion />

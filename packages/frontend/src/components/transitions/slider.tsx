@@ -22,12 +22,18 @@ export function Slider(props: Readonly<SliderProps>): JSX.Element {
           />
 
           <motion.div
-            className="fixed bottom-0 left-0 right-0 z-50 bg-base-100 rounded-t-2xl shadow-lg p-6 max-h-[90vh] overflow-y-auto"
+            className="fixed bottom-0 left-0 right-0 z-50 bg-base-100 rounded-t-2xl shadow-lg px-6 pb-6 max-h-[90vh] overflow-y-auto"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
+            <button
+              onClick={() => setOpen(false)}
+              className="hover:cursor-pointer py-3 w-full"
+            >
+              <div className="bg-white/10 rounded-2xl h-1" />
+            </button>
             {children}
           </motion.div>
         </>

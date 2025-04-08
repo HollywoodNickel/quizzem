@@ -1,4 +1,8 @@
 packages:
   - packages/*
 onlyBuiltDependencies:
+  - bcrypt
   - esbuild
+ignoredBuiltDependencies:
+  - '@nestjs/core'
+  - '@swc/core'

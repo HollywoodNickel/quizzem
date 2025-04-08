@@ -1,15 +1,29 @@
-import { JSX, PropsWithChildren } from "react";
+import clsx from "clsx";
+import {
+  DetailedHTMLProps,
+  HTMLAttributes,
+  JSX,
+  PropsWithChildren,
+} from "react";
 
-type HeadlineProps = PropsWithChildren & {
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-};
+type HeadlineProps = DetailedHTMLProps<
+  HTMLAttributes<HTMLHeadingElement>,
+  HTMLHeadingElement
+> &
+  PropsWithChildren & {
+    as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  };
 
 export function Headline(props: Readonly<HeadlineProps>): JSX.Element {
-  const { as = "h1", children } = props;
+  const { as = "h1", children, className, ...rest } = props;
 
   const Component = as;
 
-  return <Component className={headlineStyles[as]}>{children}</Component>;
+  return (
+    <Component className={clsx(headlineStyles[as], className)} {...rest}>
+      {children}
+    </Component>
+  );
 }
 
 const headlineStyles = {

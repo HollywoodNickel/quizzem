@@ -1,5 +1,6 @@
 import { EQuestionType, QuestionDto } from "@quizzem/common";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { RiCheckLine, RiCloseLine } from "@remixicon/react";
+import { JSX } from "react";
 
 type RenderAnswerProps = {
   type: EQuestionType;
@@ -20,7 +21,11 @@ export function RenderAnswer(props: Readonly<RenderAnswerProps>): JSX.Element {
           {answer.choices.map((choice, i) => (
             <div key={choice.text}>
               {i + 1}: {choice.text}{" "}
-              {choice.correctAnswer ? <IconCheck /> : <IconX color="red" />}
+              {choice.correctAnswer ? (
+                <RiCheckLine />
+              ) : (
+                <RiCloseLine color="red" />
+              )}
             </div>
           ))}
         </>

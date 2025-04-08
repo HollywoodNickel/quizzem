@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import * as cookieParser from 'cookie-parser';
 import { IEnvVariables } from 'src/utils/env.types';
 import { AppModule } from './app.module';
 
@@ -10,6 +11,8 @@ async function bootstrap() {
 
   const frontendUrl = configService.get('FRONTEND_URL', { infer: true })!;
   const port = configService.get('BACKEND_PORT', { infer: true })!;
+
+  app.use(cookieParser(configService.getOrThrow('COOKIE_PARSER_SECRET_KEY')));
 
   app.enableCors({
     origin: frontendUrl,

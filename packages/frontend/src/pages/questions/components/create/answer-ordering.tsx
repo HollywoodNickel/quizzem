@@ -23,7 +23,7 @@ export function AnswerOrdering(): JSX.Element {
           </div>
         ))}
         <Button
-          variant="outline"
+          variant="neutral"
           type="button"
           onClick={() => append({ value: "" })}
         >

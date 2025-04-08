@@ -9,7 +9,7 @@ export default defineConfig({
   envDir: resolve(process.cwd(), "../.."),
   resolve: {
     alias: {
-      "~": resolve(process.cwd(), "./src"),
+      "~/": resolve(__dirname, "src") + "/",
     },
   },
 });

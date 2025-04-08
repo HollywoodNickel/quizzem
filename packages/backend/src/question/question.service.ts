@@ -6,6 +6,8 @@ import { answersSchema } from 'src/question/answers-schema';
 import { CreateQuestionDto } from 'src/question/dto/create-question.dto';
 import { AnswerModel } from 'src/question/models/answers.model';
 import { QuestionModel } from 'src/question/models/question.model';
+import { PageableQueryDto } from 'src/utils/pageable/dto/pageable-query.dto';
+import { PageableDto } from 'src/utils/pageable/dto/pageable.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -17,8 +19,24 @@ export class QuestionService {
     private readonly answerRepo: Repository<AnswerModel>,
   ) {}
 
-  async getQuestions(): Promise<QuestionModel[]> {
-    return await this.questionRepo.find({ relations: ['answer', 'category'] });
+  async getQuestions(
+    query: PageableQueryDto,
+  ): Promise<PageableDto<QuestionModel>> {
+    const { page, size } = query;
+
+    const count = await this.questionRepo.count();
+    const questions = await this.questionRepo.find({
+      relations: ['answer', 'category'],
+      skip: page * size,
+      take: size,
+    });
+
+    return new PageableDto({
+      data: questions,
+      page,
+      size,
+      totalElements: count,
+    });
   }
 
   async addQuestion(body: CreateQuestionDto): Promise<void> {

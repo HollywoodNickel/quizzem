@@ -8,10 +8,10 @@ export class PageableDto<T> {
   constructor(options: {
     data: T[];
     totalElements: number;
-    page?: number;
-    size?: number;
+    page: number;
+    size: number;
   }) {
-    const { data, totalElements, page = 0, size = 10 } = options;
+    const { data, totalElements, page, size } = options;
 
     this.data = data;
     this.page = page;

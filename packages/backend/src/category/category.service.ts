@@ -20,8 +20,8 @@ export class CategoryService {
 
     const count = await this.categoryRepo.count();
     const categories = await this.categoryRepo.find({
-      skip: size,
-      take: page * size,
+      take: size,
+      skip: page * size,
     });
 
     return new PageableDto({

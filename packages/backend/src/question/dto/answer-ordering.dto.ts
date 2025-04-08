@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import { ArrayMinSize, IsString } from 'class-validator';
 
-export const AnswerOrderingSchema = z.object({
-  correctOrder: z.array(z.string()),
-});
-
-export type AnswerOrderingDto = z.infer<typeof AnswerOrderingSchema>;
+export class AnswerOrderingDto {
+  @IsString({ each: true })
+  @ArrayMinSize(1)
+  correctOrder: string[];
+}

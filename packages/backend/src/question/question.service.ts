@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { answersSchema } from 'src/question/dto/answers-schema';
+import { plainToInstance } from 'class-transformer';
+import { validateSync } from 'class-validator';
+import { answersSchema } from 'src/question/answers-schema';
 import { CreateQuestionDto } from 'src/question/dto/create-question.dto';
 import { AnswerModel } from 'src/question/models/answers.model';
 import { QuestionModel } from 'src/question/models/question.model';
@@ -41,14 +43,15 @@ export class QuestionService {
   }
 
   checkCorrectAnswerStructure(body: CreateQuestionDto): boolean {
-    const schema = answersSchema[body.type];
-    if (!schema) return false;
+    const SchemaClass = answersSchema[body.type];
+    if (!SchemaClass) return false;
 
-    try {
-      schema.parse(body.answer);
-      return true;
-    } catch {
-      return false;
-    }
+    const instance = plainToInstance(SchemaClass, body.answer);
+    const errors = validateSync(instance, {
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    });
+
+    return errors.length === 0;
   }
 }

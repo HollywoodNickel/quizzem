@@ -1,7 +1,6 @@
-import { z } from 'zod';
+import { IsNumber } from 'class-validator';
 
-export const AnswerNumericSchema = z.object({
-  correctAnswer: z.number(),
-});
-
-export type AnswerNumericDto = z.infer<typeof AnswerNumericSchema>;
+export class AnswerNumericDto {
+  @IsNumber()
+  correctAnswer: number;
+}

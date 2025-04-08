@@ -1,8 +1,11 @@
-import { z } from 'zod';
+import { IsString, MinLength } from 'class-validator';
 
-export const AnswerFileQuestionSchema = z.object({
-  file: z.string(),
-  correctAnswer: z.string(),
-});
+export class AnswerFileQuestionDto {
+  @IsString()
+  @MinLength(1)
+  file: string;
 
-export type AnswerFileQuestionDto = z.infer<typeof AnswerFileQuestionSchema>;
+  @IsString()
+  @MinLength(1)
+  correctAnswer: string;
+}

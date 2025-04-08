@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import { IsString, MinLength } from 'class-validator';
 
-export const CreateCategorySchema = z.object({
-  category: z.string(),
-});
-
-export type CreateCategoryDto = z.infer<typeof CreateCategorySchema>;
+export class CreateCategoryDto {
+  @IsString()
+  @MinLength(1)
+  category: string;
+}

@@ -1,7 +1,6 @@
-import { z } from 'zod';
+import { IsBoolean } from 'class-validator';
 
-export const AnswerTrueFalseSchema = z.object({
-  correctAnswer: z.boolean(),
-});
-
-export type AnswerTrueFalseDto = z.infer<typeof AnswerTrueFalseSchema>;
+export class AnswerTrueFalseDto {
+  @IsBoolean()
+  correctAnswer: boolean;
+}

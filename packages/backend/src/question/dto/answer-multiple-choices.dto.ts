@@ -1,14 +1,23 @@
-import { z } from 'zod';
+import { Type } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsBoolean,
+  IsString,
+  MinLength,
+  ValidateNested,
+} from 'class-validator';
 
-export const AnswerMultipleChoicesSchema = z.object({
-  choices: z.array(
-    z.object({
-      text: z.string(),
-      correctAnswer: z.boolean(),
-    }),
-  ),
-});
+export class AnswerMultipleChoicesDto {
+  @ValidateNested({ each: true })
+  @Type(() => MultipleChoiceDto)
+  @ArrayMinSize(2)
+  choices: MultipleChoiceDto[];
+}
 
-export type AnswerMultipleChoicesDto = z.infer<
-  typeof AnswerMultipleChoicesSchema
->;
+class MultipleChoiceDto {
+  @IsString()
+  @MinLength(1)
+  text: string;
+  @IsBoolean()
+  correctAnswer: boolean;
+}

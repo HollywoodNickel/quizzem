@@ -6,7 +6,7 @@ import { Button, Headline, Input, LabelInput } from "~/components";
 import { usePostRemote } from "~/utils";
 
 export function Auth(): JSX.Element {
-  const authMethod = useRef<"signin" | "signup" | null>(null);
+  const authMethod = useRef<"sign-in" | "sign-up" | null>(null);
   const { register, handleSubmit } = useForm<CreateUserDto>();
   const navigate = useNavigate();
   const { mutate: mutateSignIn } = usePostRemote("auth/sign-in");
@@ -19,11 +19,11 @@ export function Auth(): JSX.Element {
       navigate("game/create");
     }
 
-    if (method === "signin") {
+    if (method === "sign-in") {
       mutateSignIn(data, {
         onSuccess: () => handleSuccess(),
       });
-    } else if (method === "signup") {
+    } else if (method === "sign-up") {
       mutateSignUp(data, {
         onSuccess: () => handleSuccess(),
       });
@@ -51,12 +51,12 @@ export function Auth(): JSX.Element {
           />
         </LabelInput>
 
-        <Button onClick={() => (authMethod.current = "signin")}>
+        <Button onClick={() => (authMethod.current = "sign-in")}>
           Anmelden
         </Button>
         <Button
           variant="secondary"
-          onClick={() => (authMethod.current = "signup")}
+          onClick={() => (authMethod.current = "sign-up")}
         >
           Registrieren
         </Button>

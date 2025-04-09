@@ -23,7 +23,7 @@ export function HomePage(): JSX.Element {
 
           {authenticated ? (
             <Button className="w-48" variant="secondary">
-              <Link to={"/game"}>Spiel erstellen</Link>
+              <Link to={"/game/create"}>Spiel erstellen</Link>
             </Button>
           ) : (
             <Button

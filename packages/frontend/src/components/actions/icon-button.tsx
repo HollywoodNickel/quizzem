@@ -20,7 +20,7 @@ export function IconButton(props: Readonly<IconButtonProps>): JSX.Element {
   return (
     <button
       className={clsx(
-        "btn btn-sm btn-circle",
+        "btn btn-sm btn-circle p-1.5",
         buttonStyles[variant],
         className
       )}

@@ -1,17 +1,33 @@
 import { JSX, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import { LabelInput, Range } from "~/components";
 
-export function StandardQuizRound(): JSX.Element {
-  const [rangeValue, setRangeValue] = useState(10);
+type StandardQuizRoundProps = {
+  index: number;
+};
+
+export function StandardQuizRound(
+  props: Readonly<StandardQuizRoundProps>
+): JSX.Element {
+  const { index } = props;
+
+  const [rangeValue, setRangeValue] = useState(1);
+
+  const { register } = useFormContext();
 
   return (
     <LabelInput label="Anzahl der Fragen">
       <Range
-        min={10}
-        max={100}
-        step={10}
+        min={1}
+        max={10}
+        step={1}
         value={rangeValue}
-        onChange={(e) => setRangeValue(Number(e.target.value))}
+        {...register(`rounds.${index}.questionCount`, {
+          valueAsNumber: true,
+          onChange(event) {
+            setRangeValue(Number(event.target.value));
+          },
+        })}
       />
     </LabelInput>
   );

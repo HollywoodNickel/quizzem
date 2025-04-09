@@ -1,18 +1,23 @@
-import { RiCloseLine, RiDraggable } from "@remixicon/react";
 import clsx from "clsx";
 import { JSX } from "react";
-import { Headline, IconButton, LabelInput, Select } from "~/components";
+import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
+import { LabelInput, Select } from "~/components";
+import { CardTitle } from "~/pages/game-create/components/card-title";
 import { RenderGameRound } from "~/pages/game-create/components/game-rounds/render-game-round";
 import { EGameRoundType } from "~/pages/game-create/utils/game-create.types";
 
 type GameRoundContainerProps = {
   index: number;
+  remove: UseFieldArrayRemove;
+  fields: any[];
 };
 
 export function GameRoundContainer(
   props: Readonly<GameRoundContainerProps>
 ): JSX.Element {
-  const { index } = props;
+  const { index, remove, fields } = props;
+
+  const { register } = useFormContext();
 
   return (
     <div
@@ -21,19 +26,25 @@ export function GameRoundContainer(
         getAlternatingBgClass(index)
       )}
     >
-      {/* card title */}
-      <CardTitle index={index} />
+      <CardTitle
+        disableRemove={fields.length === 1}
+        index={index}
+        remove={remove}
+      />
 
       <div className="p-4 flex flex-col gap-4">
         <LabelInput label="Art der Runde">
-          <Select className="bg-base-200">
+          <Select className="bg-base-200" {...register(`rounds.${index}.type`)}>
             {Object.values(EGameRoundType).map((value) => (
               <option key={value}>{value}</option>
             ))}
           </Select>
         </LabelInput>
 
-        <RenderGameRound gameRound={EGameRoundType.STANDARD_QUIZ_ROUND} />
+        <RenderGameRound
+          index={index}
+          gameRound={EGameRoundType.STANDARD_QUIZ_ROUND}
+        />
       </div>
     </div>
   );
@@ -47,33 +58,4 @@ function getAlternatingBgClass(index: number): string {
   ];
 
   return backgroundClasses[index % backgroundClasses.length];
-}
-
-type CardTitleProps = {
-  index: number;
-};
-
-function CardTitle(props: Readonly<CardTitleProps>): JSX.Element {
-  const { index } = props;
-
-  return (
-    <div className="bg-base-300 rounded-t-xl w-full p-4 flex items-center justify-between">
-      <Headline as="h4" defaultMargin={false}>
-        Runde {index + 1}
-      </Headline>
-
-      <div className="flex items-center gap-2">
-        <IconButton
-          variant="accent"
-          className="btn-ghost"
-          onClick={() => {
-            console.log("Delete round", index);
-          }}
-        >
-          <RiCloseLine />
-        </IconButton>
-        <RiDraggable className="hover:cursor-pointer" />
-      </div>
-    </div>
-  );
 }

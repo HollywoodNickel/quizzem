@@ -1,7 +1,9 @@
+import { RiCloseLine, RiDraggable } from "@remixicon/react";
 import clsx from "clsx";
-import { JSX, useRef, useState } from "react";
-import { Headline } from "~/components";
-import { AddButton } from "~/pages/game-create/components/add-button";
+import { JSX } from "react";
+import { Headline, IconButton, LabelInput, Select } from "~/components";
+import { RenderGameRound } from "~/pages/game-create/components/game-rounds/render-game-round";
+import { EGameRoundType } from "~/pages/game-create/utils/game-create.types";
 
 type GameRoundContainerProps = {
   index: number;
@@ -12,10 +14,6 @@ export function GameRoundContainer(
 ): JSX.Element {
   const { index } = props;
 
-  const [tasks, setTasks] = useState<number>(1);
-
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
-
   return (
     <div
       className={clsx(
@@ -23,29 +21,19 @@ export function GameRoundContainer(
         getAlternatingBgClass(index)
       )}
     >
-      <div className="bg-base-300 rounded-t-xl w-full p-2">
-        <Headline as="h4" defaultMargin={false}>
-          Round {index + 1}
-        </Headline>
-      </div>
+      {/* card title */}
+      <CardTitle index={index} />
 
-      <div className="p-2">
-        {Array.from({ length: tasks }, (_, i) => (
-          <div key={i}>Task number {i + 1}</div>
-        ))}
+      <div className="p-4 flex flex-col gap-4">
+        <LabelInput label="Art der Runde">
+          <Select className="bg-base-200">
+            {Object.values(EGameRoundType).map((value) => (
+              <option key={value}>{value}</option>
+            ))}
+          </Select>
+        </LabelInput>
 
-        <AddButton
-          ref={buttonRef}
-          onClick={() => {
-            setTasks((prev) => prev + 1);
-            setTimeout(() => {
-              buttonRef.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-              });
-            }, 0);
-          }}
-        />
+        <RenderGameRound gameRound={EGameRoundType.STANDARD_QUIZ_ROUND} />
       </div>
     </div>
   );
@@ -59,4 +47,33 @@ function getAlternatingBgClass(index: number): string {
   ];
 
   return backgroundClasses[index % backgroundClasses.length];
+}
+
+type CardTitleProps = {
+  index: number;
+};
+
+function CardTitle(props: Readonly<CardTitleProps>): JSX.Element {
+  const { index } = props;
+
+  return (
+    <div className="bg-base-300 rounded-t-xl w-full p-4 flex items-center justify-between">
+      <Headline as="h4" defaultMargin={false}>
+        Runde {index + 1}
+      </Headline>
+
+      <div className="flex items-center gap-2">
+        <IconButton
+          variant="accent"
+          className="btn-ghost"
+          onClick={() => {
+            console.log("Delete round", index);
+          }}
+        >
+          <RiCloseLine />
+        </IconButton>
+        <RiDraggable className="hover:cursor-pointer" />
+      </div>
+    </div>
+  );
 }

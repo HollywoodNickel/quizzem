@@ -12,14 +12,26 @@ type ButtonProps = DetailedHTMLProps<
 > &
   PropsWithChildren & {
     variant?: "primary" | "secondary" | "accent" | "neutral";
+    outline?: boolean;
   };
 
 export function Button(props: Readonly<ButtonProps>): JSX.Element {
-  const { children, variant = "primary", className, ...rest } = props;
+  const {
+    children,
+    variant = "primary",
+    outline = true,
+    className,
+    ...rest
+  } = props;
 
   return (
     <button
-      className={clsx("btn btn-outline", buttonStyles[variant], className)}
+      className={clsx(
+        "btn",
+        outline && "btn-outline",
+        buttonStyles[variant],
+        className
+      )}
       {...rest}
     >
       {children}

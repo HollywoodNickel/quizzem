@@ -15,17 +15,17 @@ export function Auth(): JSX.Element {
   const onSubmit: SubmitHandler<CreateUserDto> = (data) => {
     const method = authMethod.current;
 
+    function handleSuccess() {
+      navigate("game/create");
+    }
+
     if (method === "signin") {
       mutateSignIn(data, {
-        onSuccess: () => {
-          navigate("game");
-        },
+        onSuccess: () => handleSuccess(),
       });
     } else if (method === "signup") {
       mutateSignUp(data, {
-        onSuccess: () => {
-          navigate("game");
-        },
+        onSuccess: () => handleSuccess(),
       });
     } else {
       console.error("Auth method not set");

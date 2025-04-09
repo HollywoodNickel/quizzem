@@ -2,11 +2,11 @@ import { JSX, useState } from "react";
 import { Link } from "react-router";
 import { Button, Headline, Slider } from "~/components";
 import { Auth } from "~/pages/home/components/auth";
-import { useGetRemote } from "~/utils";
+import { useAuth } from "~/utils";
 
 export function HomePage(): JSX.Element {
   const [openAuth, setOpenAuth] = useState(false);
-  const { data: authenticated, isLoading } = useGetRemote("auth/authenticated");
+  const { data: authenticated, isLoading } = useAuth();
 
   if (isLoading) {
     return <div>Loading</div>;

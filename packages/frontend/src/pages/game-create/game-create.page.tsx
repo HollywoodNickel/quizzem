@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { JSX, useRef } from "react";
 import {
   FormProvider,
@@ -8,10 +9,14 @@ import {
 import { Button, Headline, Layout } from "~/components";
 import { AddButton } from "~/pages/game-create/components/add-button";
 import { GameRoundContainer } from "~/pages/game-create/components/game-round-container";
-import { EGameRoundType } from "~/pages/game-create/utils/game-create.types";
+import { defaultRound } from "~/pages/game-create/utils/form-values";
+import { useMediaQuery } from "~/utils/styling/hooks/useMediaQuery";
 
 export function GameCreatePage(): JSX.Element {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+  const isSmall = useMediaQuery("(max-width: 33.75rem)");
+  console.log(isSmall);
 
   const form = useForm({
     defaultValues: {
@@ -37,7 +42,12 @@ export function GameCreatePage(): JSX.Element {
 
           <Button className="mb-4">Spiel erstellen</Button>
 
-          <div className="flex flex-col gap-4">
+          <div
+            className={clsx(
+              "flex",
+              isSmall ? "flex-col gap-4" : "flex-row gap-8 flex-wrap"
+            )}
+          >
             {fields.map((field, i) => (
               <GameRoundContainer
                 key={field.id}
@@ -65,8 +75,3 @@ export function GameCreatePage(): JSX.Element {
     </Layout>
   );
 }
-
-const defaultRound = {
-  type: EGameRoundType.STANDARD_QUIZ_ROUND,
-  questionCount: 1,
-};

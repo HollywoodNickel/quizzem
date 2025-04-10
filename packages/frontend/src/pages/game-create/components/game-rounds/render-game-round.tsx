@@ -1,4 +1,7 @@
 import { JSX } from "react";
+import { ActionRound } from "~/pages/game-create/components/game-rounds/action-round";
+import { BonusRound } from "~/pages/game-create/components/game-rounds/bonus-round";
+import { MediaRound } from "~/pages/game-create/components/game-rounds/media-round";
 import { StandardQuizRound } from "~/pages/game-create/components/game-rounds/standard-quiz-round";
 import { EGameRoundType } from "~/pages/game-create/utils/game-create.types";
 
@@ -15,10 +18,10 @@ export function RenderGameRound(
   const gameRoundMap: Record<EGameRoundType, JSX.Element> = {
     [EGameRoundType.STANDARD_QUIZ_ROUND]: <StandardQuizRound index={index} />,
     [EGameRoundType.SPEED_QUIZ_ROUND]: <StandardQuizRound index={index} />,
-    [EGameRoundType.ACTION_ROUND]: <></>,
-    [EGameRoundType.MEDIA_ROUND]: <></>,
-    [EGameRoundType.BONUS_ROUND]: <></>,
-    [EGameRoundType.FINAL_ROUND]: <></>,
+    [EGameRoundType.ACTION_ROUND]: <ActionRound index={index} />,
+    [EGameRoundType.MEDIA_ROUND]: <MediaRound index={index} />,
+    [EGameRoundType.BONUS_ROUND]: <BonusRound index={index} />,
+    [EGameRoundType.BUZZ_ROUND]: <StandardQuizRound index={index} />,
   };
 
   return gameRoundMap[gameRound];

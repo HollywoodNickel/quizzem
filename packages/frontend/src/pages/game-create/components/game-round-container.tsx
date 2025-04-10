@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import { JSX } from "react";
-import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
+import { UseFieldArrayRemove, useFormContext, useWatch } from "react-hook-form";
 import { LabelInput, Select } from "~/components";
 import { CardTitle } from "~/pages/game-create/components/card-title";
 import { RenderGameRound } from "~/pages/game-create/components/game-rounds/render-game-round";
-import { EGameRoundType } from "~/pages/game-create/utils/game-create.types";
+import { selectTypeOfRoundOptions } from "~/pages/game-create/utils/form-values";
 
 type GameRoundContainerProps = {
   index: number;
@@ -17,7 +17,11 @@ export function GameRoundContainer(
 ): JSX.Element {
   const { index, remove, fields } = props;
 
-  const { register } = useFormContext();
+  const { register, control } = useFormContext();
+  const gameRoundType = useWatch({
+    control,
+    name: `rounds.${index}.type`,
+  });
 
   return (
     <div
@@ -35,16 +39,15 @@ export function GameRoundContainer(
       <div className="p-4 flex flex-col gap-4">
         <LabelInput label="Art der Runde">
           <Select className="bg-base-200" {...register(`rounds.${index}.type`)}>
-            {Object.values(EGameRoundType).map((value) => (
-              <option key={value}>{value}</option>
+            {selectTypeOfRoundOptions.map((option) => (
+              <option key={option.type} value={option.type}>
+                {option.label}
+              </option>
             ))}
           </Select>
         </LabelInput>
 
-        <RenderGameRound
-          index={index}
-          gameRound={EGameRoundType.STANDARD_QUIZ_ROUND}
-        />
+        <RenderGameRound index={index} gameRound={gameRoundType} />
       </div>
     </div>
   );

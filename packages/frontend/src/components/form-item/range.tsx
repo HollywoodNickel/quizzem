@@ -15,12 +15,12 @@ export function Range(props: Readonly<RangeProps>): JSX.Element {
     <div className="w-full">
       <input
         type="range"
-        className={clsx("range", className)}
+        className={clsx("range w-full", className)}
         max={max}
         step={step}
         {...rest}
       />
-      <div className="flex justify-between px-2.5 mt-2 text-xs">
+      <div className="flex justify-between px-1.5 mt-2 text-xs">
         {Array.from({ length: steps }, (_, i) => (
           <div key={i} className="flex flex-col items-center gap-2">
             <span className="font-thin">|</span>

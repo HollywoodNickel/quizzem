@@ -1,8 +1,13 @@
 import { EGameRoundType } from "~/pages/game-create/utils/game-create.types";
 
+export const defaultAction = {
+  id: "",
+};
+
 export const defaultRound = {
   type: EGameRoundType.STANDARD_QUIZ_ROUND,
   questionCount: 1,
+  actions: [defaultAction],
 };
 
 export const selectTypeOfRoundOptions: {

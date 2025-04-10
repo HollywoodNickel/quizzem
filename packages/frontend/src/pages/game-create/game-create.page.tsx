@@ -50,7 +50,7 @@ export function GameCreatePage(): JSX.Element {
   });
 
   const onSubmit: SubmitHandler<{}> = (data) => {
-    console.log(data);
+    console.log(data); // TODO send to backend
   };
 
   function handleAddRound() {
@@ -122,6 +122,7 @@ export function GameCreatePage(): JSX.Element {
 
                 <AddButton ref={buttonRef} onClick={handleAddRound} />
               </div>
+              <pre>{JSON.stringify(form.getValues(), null, 2)}</pre>
             </form>
           </FormProvider>
         </SortableContext>

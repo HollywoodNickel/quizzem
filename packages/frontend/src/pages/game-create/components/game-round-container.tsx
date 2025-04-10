@@ -41,8 +41,6 @@ export function GameRoundContainer(
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
       className={clsx(
         overlay && "opacity-50",
         "rounded-xl shadow-xl w-full bg-base-200 border",
@@ -53,6 +51,8 @@ export function GameRoundContainer(
         disableRemove={fields.length === 1}
         index={index}
         remove={remove}
+        dragAttributes={attributes}
+        dragListeners={listeners}
       />
 
       <div className="p-4 flex flex-col gap-4">

@@ -1,3 +1,5 @@
+import { DraggableAttributes } from "@dnd-kit/core";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { RiCloseLine, RiDraggable } from "@remixicon/react";
 import { JSX } from "react";
 import { UseFieldArrayRemove } from "react-hook-form";
@@ -7,10 +9,18 @@ type CardTitleProps = {
   index: number;
   remove: UseFieldArrayRemove;
   disableRemove?: boolean;
+  dragAttributes: DraggableAttributes;
+  dragListeners: SyntheticListenerMap | undefined;
 };
 
 export function CardTitle(props: Readonly<CardTitleProps>): JSX.Element {
-  const { index, remove, disableRemove = false } = props;
+  const {
+    index,
+    remove,
+    disableRemove = false,
+    dragAttributes,
+    dragListeners,
+  } = props;
 
   return (
     <div className="bg-base-300 rounded-t-xl w-full p-4 flex items-center justify-between">
@@ -29,7 +39,9 @@ export function CardTitle(props: Readonly<CardTitleProps>): JSX.Element {
         >
           <RiCloseLine />
         </IconButton>
-        <RiDraggable className="hover:cursor-pointer" />
+        <button type="button" {...dragAttributes} {...dragListeners}>
+          <RiDraggable className="hover:cursor-pointer" />
+        </button>
       </div>
     </div>
   );

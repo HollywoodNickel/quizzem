@@ -11,6 +11,7 @@ type AddButtonProps = DetailedHTMLProps<
 export function AddButton(props: AddButtonProps): JSX.Element {
   return (
     <button
+      type="button"
       className="w-full btn btn-ghost flex items-center justify-center gap-8"
       {...props}
     >

@@ -1,5 +1,21 @@
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import clsx from "clsx";
-import { JSX, useRef } from "react";
+import { JSX, useRef, useState } from "react";
 import {
   FormProvider,
   SubmitHandler,
@@ -10,22 +26,25 @@ import { Button, Headline, Layout } from "~/components";
 import { AddButton } from "~/pages/game-create/components/add-button";
 import { GameRoundContainer } from "~/pages/game-create/components/game-round-container";
 import { defaultRound } from "~/pages/game-create/utils/form-values";
-import { useMediaQuery } from "~/utils/styling/hooks/useMediaQuery";
 
 export function GameCreatePage(): JSX.Element {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
-
-  const isSmall = useMediaQuery("(max-width: 33.75rem)");
-  console.log(isSmall);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const form = useForm({
     defaultValues: {
       rounds: [defaultRound],
     },
   });
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const { control, handleSubmit } = form;
-  const { append, remove, fields } = useFieldArray({
+  const { append, remove, fields, move } = useFieldArray({
     name: "rounds",
     control,
   });
@@ -34,44 +53,79 @@ export function GameCreatePage(): JSX.Element {
     console.log(data);
   };
 
+  function handleAddRound() {
+    append(defaultRound);
+    setTimeout(() => {
+      buttonRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 0);
+  }
+
+  function handleDragStart(event: DragStartEvent) {
+    setActiveId(String(event.active.id));
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+
+    setActiveId(null);
+    if (over && active && active.id !== over.id) {
+      const oldIndex = fields.findIndex((field) => field.id === active.id);
+      const newIndex = fields.findIndex((field) => field.id === over.id);
+
+      move(oldIndex, newIndex);
+    }
+  }
+
   return (
     <Layout>
-      <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Headline>Spiel erstellen</Headline>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext
+          items={fields.map((f) => f.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          <FormProvider {...form}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Headline>Spiel erstellen</Headline>
 
-          <Button className="mb-4">Spiel erstellen</Button>
+              <Button className="mb-4">Spiel erstellen</Button>
 
-          <div
-            className={clsx(
-              "flex",
-              isSmall ? "flex-col gap-4" : "flex-row gap-8 flex-wrap"
-            )}
-          >
-            {fields.map((field, i) => (
-              <GameRoundContainer
-                key={field.id}
-                index={i}
-                fields={fields}
-                remove={remove}
-              />
-            ))}
+              <div className={clsx("flex flex-col gap-4")}>
+                {fields.map((field, i) => (
+                  <GameRoundContainer
+                    key={field.id}
+                    id={field.id}
+                    index={i}
+                    fields={fields}
+                    remove={remove}
+                    overlay={activeId === field.id}
+                  />
+                ))}
 
-            <AddButton
-              ref={buttonRef}
-              onClick={() => {
-                append(defaultRound);
-                setTimeout(() => {
-                  buttonRef.current?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center",
-                  });
-                }, 0);
-              }}
-            />
-          </div>
-        </form>
-      </FormProvider>
+                <DragOverlay>
+                  {activeId ? (
+                    <GameRoundContainer
+                      id={activeId}
+                      index={fields.findIndex((field) => field.id === activeId)}
+                      fields={fields}
+                      remove={remove}
+                    />
+                  ) : null}
+                </DragOverlay>
+
+                <AddButton ref={buttonRef} onClick={handleAddRound} />
+              </div>
+            </form>
+          </FormProvider>
+        </SortableContext>
+      </DndContext>
     </Layout>
   );
 }

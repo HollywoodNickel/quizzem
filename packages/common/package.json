@@ -9,8 +9,8 @@
     }
   },
   "scripts": {
-    "build": "rimraf ./dist && tsc && pnpm generate && pnpm prettier",
-    "generate": "tsx src/generate.ts",
+    "generate": "rimraf ./dist && tsc && pnpm generate-pre && pnpm prettier",
+    "generate-pre": "tsx src/generate.ts",
     "prettier": "prettier --write ./dist"
   },
   "dependencies": {
